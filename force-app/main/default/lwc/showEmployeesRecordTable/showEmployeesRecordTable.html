@@ -1,0 +1,27 @@
+<template>
+    <lightning-card title="Employees" icon-name="standard:asset_relationship">
+        <div class="slds-grid slds-gutters slds-wrap slds-m-around_large">
+            <div class="slds-col slds-size_6-of-12 slds-p-right_small">
+                <lightning-input type="search" onchange={handleSearchNameChange} label="Enter Employee Name"
+                    variant="label-hidden" placeholder="Enter Employee Name">
+                </lightning-input>
+            </div>
+            <div class="slds-col slds-text-align_right">
+                <lightning-button variant="brand-outline" label="Create New Employee" title="Create New Employee"
+                    onclick={handleNewClick}>
+                </lightning-button>
+            </div>
+        </div>
+        <template lwc:if={employeeList}>
+            <lightning-datatable key-field="id" data={employeeList} columns={columns} onrowaction={handleRowAction}
+                class="slds-m-around_small" hide-checkbox-column show-row-number-column>
+            </lightning-datatable>
+        </template>
+        <template lwc:elseif={error}>
+            <p>{error}</p>
+        </template>
+    </lightning-card>
+    <template lwc:if={showSpinner}>
+        <lightning-spinner alternative-text="Loading..." size="large"></lightning-spinner>
+    </template>
+</template>
