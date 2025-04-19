@@ -1,6 +1,5 @@
 public class EmployeeTriggerHandler {
     private Set<String> emailSet;
-    private Set<String> employeeIdSet;
     private Set<String> mobileNumberSet;
     private EmployeeTriggerSelector selector;
     private static List<Employee__c> employeesWithInvalidData = new List<Employee__c>();
@@ -15,7 +14,6 @@ public class EmployeeTriggerHandler {
     
     public EmployeeTriggerHandler(){
         emailSet = new Set<String>();
-        employeeIdSet = new Set<String>();
         mobileNumberSet = new Set<String>();
         errorLogList = new List<Error_Log__c>();
         selector = new EmployeeTriggerSelector();
@@ -62,7 +60,7 @@ public class EmployeeTriggerHandler {
                 Error_Log__c log = new Error_Log__c();
                 log.Employee_Name__c = emp.Name;
                 log.Employee_Id__c = emp.Employee_Id__c;
-                log.Error_Message__c = 'Either Email or Employee Id or Phone Number is duplicate.Please check the data';
+                log.Error_Message__c = 'Either Email or Mobile Number is duplicate.Please check the data';
                 errorLogList.add(log);
             }
             insertErrorLogs(errorLogList);
@@ -143,15 +141,15 @@ public class EmployeeTriggerHandler {
     
     private void validateEmployeeData(List<Employee__c> newEmployeeList){
         for(Employee__c empl : newEmployeeList){
-            if(empl.Employee_Id__c == null || empl.Employee_Email__c == null || empl.Date_of_Joining__c == null
+            if(empl.Employee_Email__c == null || empl.Date_of_Joining__c == null
                || empl.Manager_Employee_Id__c == null || empl.Designation__c == null || empl.Mobile__c == null
               ){
                   employeesWithInvalidData.add(empl);
               }
             
-            else if(empl.Employee_Id__c != null && empl.Employee_Email__c != null && empl.Date_of_Joining__c != null
+            else if(empl.Employee_Email__c != null && empl.Date_of_Joining__c != null
                     && empl.Manager_Employee_Id__c != null && empl.Designation__c != null && empl.Mobile__c != null){
-                        if(emailSet.contains(empl.Employee_Email__c) || employeeIdSet.contains(empl.Employee_Id__c) || mobileNumberSet.contains(empl.Mobile__c)){
+                        if(emailSet.contains(empl.Employee_Email__c) || mobileNumberSet.contains(empl.Mobile__c)){
                             employeesWithDuplicateData.add(empl);
                         }
                         
@@ -159,11 +157,12 @@ public class EmployeeTriggerHandler {
                             employeesWithNoManager.add(empl);
                         }
                         
-                        else if (!validateEmployeeIdPattern(empl.Employee_Id__c) || !validateEmployeeIdPattern(empl.Manager_Employee_Id__c)){
-                            employeesWithInvalidIdPattern.add(empl);
-                        }
                         else if(empl.Date_of_Joining__c > system.Today()){
                             employeesWithFutureJoiningDate.add(empl);
+                        }
+                        
+                        else if (!validateEmployeeIdPattern(empl.Manager_Employee_Id__c)){
+                            employeesWithInvalidIdPattern.add(empl);
                         }
                         
                         else if (!validateMobileNumberPattern(empl.Mobile__c)){
@@ -173,7 +172,6 @@ public class EmployeeTriggerHandler {
                         else {
                             Employee_Account__c employeeAccount = new Employee_Account__c();
                             employeeAccount.Employee_Name__c = empl.Name;
-                            employeeAccount.Employee_Id__c = empl.Employee_Id__c;
                             employeeAccount.Employee_Email__c = empl.Employee_Email__c;
                             employeeAccount.Date_of_Joining__c = empl.Date_of_Joining__c;
                             employeeAccount.Mobile__c = empl.Mobile__c;
@@ -189,7 +187,6 @@ public class EmployeeTriggerHandler {
         List<Employee__c> employeeList = selector.getEmployees();
         for(Employee__c emp: employeeList){
             emailSet.add(emp.Employee_Email__c);
-            employeeIdSet.add(emp.Employee_Id__c);
             mobileNumberSet.add(emp.Mobile__c);
         }
     }

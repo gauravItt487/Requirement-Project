@@ -12,8 +12,8 @@
     <isOmniPinnedViewEnabled>false</isOmniPinnedViewEnabled>
     <label>Employees</label>
     <navType>Standard</navType>
-    <tabs>Employee__c</tabs>
     <tabs>Employees</tabs>
+    <tabs>Employee_Account__c</tabs>
     <tabs>Error_Log__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Employees_UtilityBar</utilityBar>
