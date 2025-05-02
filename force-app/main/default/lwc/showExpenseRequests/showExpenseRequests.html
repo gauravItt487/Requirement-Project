@@ -1,0 +1,17 @@
+<template>
+    <lightning-card title="Expense Requests" icon-name="standard:expense">
+        <div class="slds-wrap slds-m-around_medium slds-col slds-text-align_right">
+            <lightning-button variant="brand-outline" label="Create New Expense Request"
+                title="Create New Expense Request" onclick={handleNewClick}>
+            </lightning-button>
+        </div>
+        <template lwc:if={expenseList}>
+            <lightning-datatable key-field="id" data={expenseList} columns={columns} onrowaction={handleRowAction}
+                class="slds-m-around_small" hide-checkbox-column show-row-number-column>
+            </lightning-datatable>
+        </template>
+        <template lwc:elseif={error}>
+            <p>{error}</p>
+        </template>
+    </lightning-card>
+</template>
