@@ -25,6 +25,11 @@
                 <default>false</default>
                 <label>Rejected</label>
             </value>
+            <value>
+                <fullName>Credited</fullName>
+                <default>false</default>
+                <label>Credited</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

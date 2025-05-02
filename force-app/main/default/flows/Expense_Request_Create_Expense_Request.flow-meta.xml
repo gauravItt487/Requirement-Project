@@ -4,7 +4,7 @@
         <name>Approval_Submission_for_Manager</name>
         <label>Approval Submission for Manager</label>
         <locationX>50</locationX>
-        <locationY>782</locationY>
+        <locationY>890</locationY>
         <actionName>submit</actionName>
         <actionType>submit</actionType>
         <connector>
@@ -31,7 +31,7 @@
         <name>Approval_Submission_for_Manager_and_Director</name>
         <label>Approval Submission for Manager and Director</label>
         <locationX>314</locationX>
-        <locationY>1106</locationY>
+        <locationY>1214</locationY>
         <actionName>submit</actionName>
         <actionType>submit</actionType>
         <connector>
@@ -58,7 +58,7 @@
         <name>Send_Email_to_Director</name>
         <label>Send Email to Manager And Director</label>
         <locationX>314</locationX>
-        <locationY>1214</locationY>
+        <locationY>1322</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -93,7 +93,7 @@
         <name>Send_Email_to_Manager</name>
         <label>Send Email to Manager</label>
         <locationX>50</locationX>
-        <locationY>890</locationY>
+        <locationY>998</locationY>
         <actionName>emailSimple</actionName>
         <actionType>emailSimple</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -101,12 +101,6 @@
             <name>emailAddresses</name>
             <value>
                 <elementReference>get_current_user_manager_s_email.Email</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>senderType</name>
-            <value>
-                <elementReference>$User.Email</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -136,7 +130,7 @@
         <name>Assign_Manager_and_Director_Email_id</name>
         <label>Assign Manager and Director Email id</label>
         <locationX>314</locationX>
-        <locationY>998</locationY>
+        <locationY>1106</locationY>
         <assignmentItems>
             <assignToReference>assignManagerAndDirectorEmailId</assignToReference>
             <operator>Add</operator>
@@ -162,10 +156,35 @@
         </value>
     </customProperties>
     <decisions>
+        <name>Check_Employee_manger_not_null</name>
+        <label>Check Employee manger not null</label>
+        <locationX>578</locationX>
+        <locationY>566</locationY>
+        <defaultConnector>
+            <targetReference>Error_Screen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$User.ManagerId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Expense_Request_amount</targetReference>
+            </connector>
+            <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Check_Expense_Request_amount</name>
         <label>Check Expense Request amount</label>
         <locationX>314</locationX>
-        <locationY>566</locationY>
+        <locationY>674</locationY>
         <defaultConnector>
             <targetReference>Create_Expense</targetReference>
         </defaultConnector>
@@ -254,7 +273,7 @@
         <name>Create_Expense</name>
         <label>Create Expense</label>
         <locationX>578</locationX>
-        <locationY>674</locationY>
+        <locationY>782</locationY>
         <inputAssignments>
             <field>Amount__c</field>
             <value>
@@ -304,7 +323,7 @@
         <name>Create_Expense_for_amount_greater_than_1_lac</name>
         <label>Create Expense for amount greater than 1 lac</label>
         <locationX>314</locationX>
-        <locationY>674</locationY>
+        <locationY>782</locationY>
         <connector>
             <targetReference>Get_CEO_role_id</targetReference>
         </connector>
@@ -357,7 +376,7 @@
         <name>Create_Expense_for_amount_less_than_1_lac</name>
         <label>Create Expense for amount less than 1 lac</label>
         <locationX>50</locationX>
-        <locationY>674</locationY>
+        <locationY>782</locationY>
         <connector>
             <targetReference>Approval_Submission_for_Manager</targetReference>
         </connector>
@@ -409,7 +428,7 @@
     <recordCreates>
         <name>Create_Expense_Request</name>
         <label>Create Expense Request</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>242</locationY>
         <connector>
             <targetReference>Get_current_user_s_manager_id</targetReference>
@@ -457,7 +476,7 @@
         <name>Get_CEO_role_id</name>
         <label>Get CEO role id</label>
         <locationX>314</locationX>
-        <locationY>782</locationY>
+        <locationY>890</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Director_CEO_Email</targetReference>
@@ -477,11 +496,11 @@
     <recordLookups>
         <name>get_current_user_manager_s_email</name>
         <label>get current user manager&apos;s email</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Check_Expense_Request_amount</targetReference>
+            <targetReference>Check_Employee_manger_not_null</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -498,7 +517,7 @@
     <recordLookups>
         <name>Get_current_user_s_manager_id</name>
         <label>Get current user&apos;s manager id</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>350</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -520,7 +539,7 @@
         <name>Get_Director_CEO_Email</name>
         <label>Get Director/CEO Email</label>
         <locationX>314</locationX>
-        <locationY>890</locationY>
+        <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_Manager_and_Director_Email_id</targetReference>
@@ -539,9 +558,25 @@
     </recordLookups>
     <runInMode>SystemModeWithoutSharing</runInMode>
     <screens>
+        <name>Error_Screen</name>
+        <label>Error Screen</label>
+        <locationX>842</locationX>
+        <locationY>674</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>managerNullErrorMessage</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(231, 0, 0);&quot;&gt;The Employee&apos;s manager is not present kindly assign the manager to the employee.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Expense_Request</name>
         <label>Expense Request</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>134</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -641,7 +676,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>188</locationX>
+        <locationX>452</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Expense_Request</targetReference>
