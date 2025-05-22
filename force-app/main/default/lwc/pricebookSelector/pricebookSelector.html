@@ -1,0 +1,14 @@
+<template>
+    <lightning-card title="Select a Pricebook" icon-name="standard:pricebook">
+        <div class="slds-p-around_medium">
+            <lightning-datatable key-field="id" data={pricebooks} columns={columns} onrowselection={handleSelection}
+                show-row-number-column="true" class="slds-m-bottom_medium">
+            </lightning-datatable>
+
+            <div class="slds-m-top_medium slds-text-align_left">
+                <lightning-button label="Next" onclick={handleNext} disabled={isNextDisabled} variant="brand">
+                </lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</template>

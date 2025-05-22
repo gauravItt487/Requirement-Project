@@ -1,0 +1,15 @@
+<template>
+    <lightning-card title="Product Selection" icon-name="standard:product">
+        <div class="slds-p-around_medium">
+            <lightning-datatable key-field="id" data={products} columns={columns} oncellchange={handleQuantityChange}
+                onrowselection={handleRowSelection} onsave={handleSave} draft-values={draftValues}
+                class="slds-box slds-box_xx-small">
+            </lightning-datatable>
+
+            <div class="slds-m-top_medium slds-text-align_left">
+                <lightning-button variant="brand" label="Next" title="Proceed to Quote Creation" onclick={handleNext}>
+                </lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</template>

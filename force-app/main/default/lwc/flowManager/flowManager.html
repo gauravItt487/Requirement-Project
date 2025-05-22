@@ -1,0 +1,34 @@
+<template>
+    <template if:true={currentScreen.customerDetails}>
+        <c-user-details-form onnext={handleNext}></c-user-details-form>
+    </template>
+
+    <template if:true={currentScreen.pricebookSelection}>
+        <c-pricebook-selector account-id={accountId} opportunity-id={opportunityId} email={email}
+            onnext={handleNext}></c-pricebook-selector>
+    </template>
+
+    <template if:true={currentScreen.productSelection}>
+        <c-product-selection pricebook-id={pricebookId} account-id={accountId} opportunity-id={opportunityId}
+            email={email} onnext={handleNext}></c-product-selection>
+    </template>
+
+    <template if:true={currentScreen.quoteReview}>
+        <c-quote-product-pdf quote-id={quoteId} account-id={accountId} onnext={handleNext}
+            email={email}></c-quote-product-pdf>
+    </template>
+
+    <template if:true={currentScreen.orderDetails}>
+        <c-order-details-screen order-id={orderId} content-version-id={contentVersionId} email={email}
+            onnext={handleNext}></c-order-details-screen>
+    </template>
+
+    <template if:true={currentScreen.payment}>
+        <c-payment-screen onnext={handleNext} content-version-id={contentVersionId} email={email}></c-payment-screen>
+    </template>
+
+    <template if:true={currentScreen.thankYou}>
+        <c-thank-you-screen onnext={handleNext} content-version-id={contentVersionId}></c-thank-you-screen>
+    </template>
+
+</template>
