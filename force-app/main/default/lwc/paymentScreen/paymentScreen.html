@@ -1,0 +1,23 @@
+<template>
+    <lightning-card title="Enter Payment Details">
+        <div class="slds-p-around_medium slds-grid slds-grid_vertical">
+
+            <div class="slds-m-bottom_medium">
+                <lightning-input name="cardnumber" label="Credit Card Number" type="number" value={cardnumber}
+                    onchange={handleInputChange}>
+                </lightning-input>
+            </div>
+
+            <div class="slds-m-bottom_medium">
+                <lightning-input name="cvv" type="number" label="CVV" value={cvv} onchange={handleInputChange}>
+                </lightning-input>
+            </div>
+
+            <div class="slds-align_absolute-center">
+                <lightning-button label="Next" variant="brand" onclick={handleNext}>
+                </lightning-button>
+            </div>
+
+        </div>
+    </lightning-card>
+</template>

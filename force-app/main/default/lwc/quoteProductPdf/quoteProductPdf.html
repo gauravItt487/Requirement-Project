@@ -1,0 +1,32 @@
+<template>
+    <lightning-card title="PDF Generator">
+        <div class="slds-p-around_medium">
+            <template if:true={quote.data}>
+                <lightning-layout multiple-rows>
+                    <lightning-layout-item size="12" class="slds-var-m-bottom_small">
+                        <lightning-formatted-text value={number}
+                            class="slds-text-title_bold"></lightning-formatted-text>
+                        <div class="slds-text-body_regular">Quote Number</div>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="6">
+                        <lightning-formatted-number value={subtotal}
+                            format-style="currency"></lightning-formatted-number>
+                        <div class="slds-text-body_regular">Subtotal</div>
+                    </lightning-layout-item>
+
+                    <lightning-layout-item size="6">
+                        <lightning-formatted-number value={totalprice}
+                            format-style="currency"></lightning-formatted-number>
+                        <div class="slds-text-body_regular">Total Price</div>
+                    </lightning-layout-item>
+                </lightning-layout>
+            </template>
+
+            <div class="slds-var-m-top_medium slds-align_absolute-center">
+                <lightning-button variant="brand" label="Generate PDF and Create Order"
+                    onclick={generatePDF}></lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+</template>
